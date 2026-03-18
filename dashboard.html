@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hoş Geldin | HAT30</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f0c29;
+            color: white;
+            text-align: center;
+            margin: 0;
+        }
+
+        .welcome-section {
+            padding: 100px 20px;
+            background: linear-gradient(to bottom, #1a1a2e, #0f0c29);
+        }
+
+        /* FARKLI STİLLİ SİPARİŞ BÖLÜMÜ (GRADYENLİ VE ŞIK) */
+        .order-section {
+            background: radial-gradient(circle, #24243e, #0f0c29);
+            padding: 80px 20px;
+            margin-top: 50px;
+            border-top: 2px solid #3a7bd5;
+        }
+
+        .order-btn {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            padding: 20px 40px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .order-btn:hover {
+            transform: scale(1.1);
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-top: 10px;
+        }
+
+        .btn-save {
+            background: #00d2ff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="welcome-section">
+        <h1 id="welcome-text">Hoş Geldin!</h1>
+
+        <div id="name-setup">
+            <p>Kullanıcı adını belirle:</p>
+            <input type="text" id="username-input" placeholder="Adın nedir?">
+            <button class="btn-save" onclick="saveName()">Kaydet</button>
+        </div>
+    </div>
+
+    <div class="order-section">
+        <h2>Geleceğin Teknolojisine Sahip Ol</h2>
+        <p>HAT30 Drone Çipi çok yakında ön siparişe açılacaktır.</p>
+        <button class="order-btn" onclick="orderAlert()">SİPARİŞ VER</button>
+    </div>
+
+    <script>
+        // Kullanıcı adını tarayıcı hafızasına (localStorage) kaydedelim
+        function saveName() {
+            const name = document.getElementById('username-input').value;
+            if (name) {
+                localStorage.setItem('hat30_user', name);
+                updateUI(name);
+            }
+        }
+
+        function updateUI(name) {
+            document.getElementById('welcome-text').innerText = "Merhaba " + name + "!";
+            document.getElementById('name-setup').style.display = "none";
+        }
+
+        function orderAlert() {
+            alert("Ürünlerimiz çok yakında hizmete sunulacaktır!");
+        }
+
+        // Sayfa açıldığında isim var mı kontrol et
+        const savedName = localStorage.getItem('hat30_user');
+        if (savedName) updateUI(savedName);
+    </script>
+</body>
+
+</html>
