@@ -1,42 +1,47 @@
-<!DOCTYPE html>
-<html lang="tr">
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-<head>
-  <meta charset="UTF-8">
-  <title>Proje Prototipi</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+  // Senin Firebase bilgilerini buraya yerleştirdim
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwOgPy54D0tyUzMrSkANGC5h4veQUkETM",
+    authDomain: "tanitim-sitesi.firebaseapp.com",
+    projectId: "tanitim-sitesi",
+    storageBucket: "tanitim-sitesi.firebasestorage.app",
+    messagingSenderId: "615084312824",
+    appId: "1:615084312824:web:f07b192dc33dcee02d530d",
+    measurementId: "G-8BFXS8HZ03"
+  };
 
-<body>
-  <nav>
-    <div class="logo">ProjeLogosu</div>
-    <ul>
-      <li><a href="#home">Giriş</a></li>
-      <li><a href="#mission">Misyonumuz</a></li>
-      <li><a href="#contact">İletişim</a></li>
-    </ul>
-  </nav>
+  // Firebase'i başlat
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-  <section id="home" class="auth-container">
-    <div class="card">
-      <h2>Giriş Yap / Hesap Aç</h2>
-      <input type="email" placeholder="E-posta Adresi">
-      <input type="password" placeholder="Şifre">
-      <button class="btn">Giriş Yap</button>
-      <p>Hesabınız yok mu? <a href="#">Kayıt Ol</a></p>
-    </div>
-  </section>
+  // Butonlara ve kutucuklara erişelim
+  const emailInput = document.querySelector('input[type="email"]');
+  const passwordInput = document.querySelector('input[type="password"]');
+  const loginBtn = document.querySelector('.btn'); // Giriş Yap butonu
 
-  <section id="mission">
-    <h2>Misyonumuz</h2>
-    <p>Bu proje, dünyayı daha iyi bir yer haline getirmek ve teknoloji ile çözümler üretmek amacıyla başlatılmıştır.</p>
-  </section>
+  // KAYIT OL FONKSİYONU
+  // (Senin HTML'inde şimdilik sadece "Kayıt Ol" linki vardı, 
+  // gel onu şimdilik Giriş butonuna bağlayalım veya yeni bir buton ekleyelim)
 
-  <section id="contact">
-    <h2>İletişim Bilgileri</h2>
-    <p>📍 Adres: İstanbul, Türkiye</p>
-    <p>📧 E-posta: info@projemiz.com</p>
-  </section>
-</body>
+  loginBtn.addEventListener('click', () => {
+    const email = emailInput.value;
+    const password = passwordInput.value;
 
-</html>
+    if (email === "" || password === "") {
+      alert("Lütfen tüm alanları doldur!");
+      return;
+    }
+
+    // Kullanıcıyı Firebase'e kaydet
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        alert("Başarıyla kayıt oldun! Hoş geldin.");
+      })
+      .catch((error) => {
+        alert("Hata oluştu: " + error.message);
+      });
+  });
+</script>
