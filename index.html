@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adil | Proje Portfolyosu</title>
+  <title>İleriHAT | HAT30 Projesi</title>
 
   <style>
-    /* ŞEKİL ŞUKUL CSS BURADA */
+    /* MODERN TASARIM AYARLARI */
     :root {
       --primary: #00d2ff;
       --secondary: #3a7bd5;
@@ -24,7 +24,7 @@
       scroll-behavior: smooth;
     }
 
-    /* SOL ÜST BUTONLAR */
+    /* SOL ÜST MENÜ */
     .nav-auth {
       position: fixed;
       top: 20px;
@@ -43,7 +43,7 @@
       border-radius: 30px;
       cursor: pointer;
       font-weight: 600;
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
 
     .auth-btn:hover {
@@ -52,7 +52,7 @@
       transform: translateY(-3px);
     }
 
-    /* ANA İÇERİK KUTULARI */
+    /* ANA KONTEYNER */
     .container {
       max-width: 900px;
       margin: 100px auto;
@@ -70,15 +70,36 @@
       text-align: center;
     }
 
+    /* HAT30 ÖZEL KUTU STİLİ */
+    #coming-soon {
+      border: 2px solid var(--primary);
+      background: rgba(0, 210, 255, 0.05);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.4);
+      }
+
+      70% {
+        box-shadow: 0 0 0 20px rgba(0, 210, 255, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 210, 255, 0);
+      }
+    }
+
     h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
+      font-size: 2.5rem;
       color: var(--primary);
+      margin-top: 10px;
     }
 
     h2 {
-      font-size: 2rem;
-      color: var(--primary);
+      letter-spacing: 5px;
+      color: #fff;
     }
 
     p {
@@ -87,7 +108,7 @@
       opacity: 0.9;
     }
 
-    /* MODAL (AÇILIR PENCERE) */
+    /* MODAL TASARIMI */
     .modal {
       display: none;
       position: fixed;
@@ -102,7 +123,7 @@
 
     .modal-content {
       background: #1a1a2e;
-      width: 350px;
+      width: 320px;
       margin: 10% auto;
       padding: 40px;
       border-radius: 20px;
@@ -117,7 +138,6 @@
       right: 20px;
       font-size: 25px;
       cursor: pointer;
-      color: white;
     }
 
     input {
@@ -142,17 +162,6 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
-    /* İLETİŞİM LİSTESİ */
-    .contact-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .contact-list li {
-      margin: 15px 0;
-      font-size: 1.2rem;
-    }
   </style>
 </head>
 
@@ -164,6 +173,11 @@
   </div>
 
   <div class="container">
+    <section class="card" id="coming-soon">
+      <h2 style="margin:0;">⚠️ HAT30 ÇOK YAKINDA</h2>
+      <p>Yerli Drone Çipimiz yakında hizmete sunulacaktır. Takipte kalın!</p>
+    </section>
+
     <section class="card" id="mission">
       <h3 style="color: var(--primary); letter-spacing: 2px; margin-bottom: 0;">İleriHAT- HAT30</h3>
       <h1>🚀 Misyonumuz</h1>
@@ -171,12 +185,9 @@
     </section>
 
     <section class="card" id="contact">
-      <h2>📱 İletişim Bilgileri</h2>
-      <ul class="contact-list">
-        <li><strong>E-posta:</strong> adilerkamtek2011@gmail.com</li>
-        <li><strong>GitHub:</strong> <a href="https://github.com/adilweee" style="color:white;">@adilweee</a></li>
-        <li>📍 HATAY, Türkiye</li>
-      </ul>
+      <h2>📱 İletişim</h2>
+      <p>E-posta: adilerkamtek2011@gmail.com</p>
+      <p>Konum: HATAY, Türkiye</p>
     </section>
   </div>
 
@@ -184,8 +195,8 @@
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal()">&times;</span>
       <h2 id="modalTitle">Kayıt Ol</h2>
-      <input type="email" id="email" placeholder="E-posta Adresin">
-      <input type="password" id="password" placeholder="Şifren (En az 6 hane)">
+      <input type="email" id="email" placeholder="E-posta">
+      <input type="password" id="password" placeholder="Şifre (Min 6 Karakter)">
       <button class="submit-btn" id="mainActionBtn">Devam Et</button>
       <p id="msg" style="font-size: 12px; margin-top: 10px;"></p>
     </div>
@@ -213,7 +224,6 @@
     const actionBtn = document.getElementById('mainActionBtn');
     const msg = document.getElementById('msg');
 
-    // Modal'ı Açma Fonksiyonu (Global yaptık)
     window.toggleModal = function (mode) {
       modal.style.display = "block";
       msg.innerText = "";
@@ -230,7 +240,6 @@
 
     window.closeModal = function () { modal.style.display = "none"; }
 
-    // Firebase İşlemleri
     async function handleAuth(mode) {
       const email = document.getElementById('email').value;
       const pass = document.getElementById('password').value;
@@ -238,12 +247,11 @@
       try {
         if (mode === 'signup') {
           await createUserWithEmailAndPassword(auth, email, pass);
-          alert("Kayıt Başarılı Adil! Firebase'i kontrol et.");
         } else {
           await signInWithEmailAndPassword(auth, email, pass);
-          alert("Giriş Başarılı! Tekrar hoş geldin.");
         }
-        closeModal();
+        // GİRİŞ BAŞARILIYSA DİĞER SAYFAYA GİT
+        window.location.href = "dashboard.html";
       } catch (error) {
         msg.style.color = "red";
         msg.innerText = "Hata: " + error.message;
