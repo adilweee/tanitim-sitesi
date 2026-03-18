@@ -4,34 +4,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tanıtım Sitesi | Adil</title>
+  <title>Adil | Tanıtım Sitesi</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Hızlıca butonları sol üste sabitlemek için ek stil */
+    .auth-buttons {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .auth-btn {
+      padding: 8px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background: #f4f4f4;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 100px 20px;
+      text-align: center;
+      min-height: 50vh;
+    }
+
+    #contact {
+      background-color: #f9f9f9;
+    }
+  </style>
 </head>
 
 <body>
 
-  <div class="login-container">
-    <h1>Hoş Geldin</h1>
-
-    <div class="input-group">
-      <input type="email" id="user-email" placeholder="E-posta Adresini Yaz" required>
-    </div>
-
-    <div class="input-group">
-      <input type="password" id="user-password" placeholder="Şifreni Belirle (Min. 6 Karakter)" required>
-    </div>
-
-    <button type="button" id="login-btn" class="btn">Kayıt Ol / Giriş Yap</button>
-
-    <p id="status-message" style="margin-top: 15px; color: yellow;"></p>
+  <div class="auth-buttons">
+    <button id="login-btn" class="auth-btn">Log In</button>
+    <button id="signup-btn" class="auth-btn" style="background: #28a745; color: white;">Sign Up</button>
   </div>
 
-  <script type="module">
-    // Firebase Modüllerini Yüklüyoruz
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  <section id="mission">
+    <h1>Misyonumuz</h1>
+    <p>Geleceğin teknolojilerini (Arduino, Elektronik ve Web) kullanarak <br>
+      yaratıcı çözümler üretmek ve sürekli öğrenmeye devam etmek.</p>
+  </section>
 
-    // Senin Firebase Bilgilerin
+  <hr>
+  <section id="contact">
+    <h2>İletişim</h2>
+    <p><strong>E-posta:</strong> adil@example.com</p>
+    <p><strong>GitHub:</strong> github.com/adilweee</p>
+    <p>Türkiye / İstanbul</p>
+  </section>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyCwOgPy54D0tyUzMrSkANGC5h4veQUkETM",
       authDomain: "tanitim-sitesi.firebaseapp.com",
@@ -42,45 +73,29 @@
       measurementId: "G-8BFXS8HZ03"
     };
 
-    // Firebase'i Başlat
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // HTML Elementlerine Erişim
-    const emailInput = document.getElementById('user-email');
-    const passwordInput = document.getElementById('user-password');
-    const loginBtn = document.getElementById('login-btn');
-    const statusMsg = document.getElementById('status-message');
+    // Butonlara tıklayınca ne olacak?
+    document.getElementById('signup-btn').addEventListener('click', () => {
+      const email = prompt("Kayıt için E-posta girin:");
+      const pass = prompt("Şifre belirleyin (min 6 karakter):");
+      if (email && pass) {
+        createUserWithEmailAndPassword(auth, email, pass)
+          .then(() => alert("Başarıyla Sign Up yapıldı!"))
+          .catch((e) => alert("Hata: " + e.message));
+      }
+    });
 
-    // Butona Tıklama Olayı
-    if (loginBtn) {
-      loginBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        const email = emailInput.value;
-        const password = passwordInput.value;
-
-        if (email === "" || password.length < 6) {
-          alert("Lütfen geçerli bir mail yaz ve şifren en az 6 karakter olsun!");
-          return;
-        }
-
-        statusMsg.innerText = "İşlem yapılıyor, lütfen bekle...";
-
-        // Firebase Kayıt Fonksiyonu
-        createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            statusMsg.style.color = "lime";
-            statusMsg.innerText = "Başarıyla kayıt oldun! Firebase'i kontrol et.";
-            alert("Tebrikler Adil! Kayıt başarılı.");
-          })
-          .catch((error) => {
-            statusMsg.style.color = "red";
-            statusMsg.innerText = "Hata: " + error.message;
-            console.error("Hata Detayı:", error.code);
-          });
-      });
-    }
+    document.getElementById('login-btn').addEventListener('click', () => {
+      const email = prompt("Giriş için E-posta:");
+      const pass = prompt("Şifre:");
+      if (email && pass) {
+        signInWithEmailAndPassword(auth, email, pass)
+          .then(() => alert("Hoş geldin! Giriş başarılı."))
+          .catch((e) => alert("Giriş başarısız: " + e.message));
+      }
+    });
   </script>
 </body>
 
