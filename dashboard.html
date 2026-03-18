@@ -3,59 +3,111 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Hoş Geldin | HAT30</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Müşteri Paneli | HAT30</title>
     <style>
+        /* MODERN DASHBOARD TASARIMI */
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --accent: #f5576c;
+            --bg: #0f0c29;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: white;
+            margin: 0;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* HOŞ GELDİN BÖLÜMÜ */
+        .welcome-section {
+            padding: 80px 20px;
+            background: linear-gradient(to bottom, #1a1a2e, #0f0c29);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 80%;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
             background: #0f0c29;
             color: white;
             text-align: center;
-            margin: 0;
         }
 
-        .welcome-section {
-            padding: 100px 20px;
-            background: linear-gradient(to bottom, #1a1a2e, #0f0c29);
+        .btn-save {
+            margin-top: 20px;
+            padding: 10px 30px;
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        /* FARKLI STİLLİ SİPARİŞ BÖLÜMÜ (GRADYENLİ VE ŞIK) */
+        .btn-save:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* SİPARİŞ BÖLÜMÜ (ŞEKİL ŞUKUL KISIM) */
         .order-section {
-            background: radial-gradient(circle, #24243e, #0f0c29);
-            padding: 80px 20px;
-            margin-top: 50px;
-            border-top: 2px solid #3a7bd5;
+            padding: 100px 20px;
+            background: radial-gradient(circle at center, #24243e 0%, #0f0c29 100%);
+        }
+
+        .order-container {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .order-btn {
             background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
             border: none;
-            padding: 20px 40px;
+            padding: 25px 50px;
             color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border-radius: 50px;
+            font-size: 1.6rem;
+            font-weight: 800;
+            border-radius: 60px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.4);
+            transition: 0.4s;
+            box-shadow: 0 15px 35px rgba(245, 87, 108, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .order-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(-2deg);
+            box-shadow: 0 20px 45px rgba(245, 87, 108, 0.6);
         }
 
-        input {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            margin-top: 10px;
-        }
-
-        .btn-save {
-            background: #00d2ff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
+        .status-text {
+            margin-top: 25px;
+            font-style: italic;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -63,28 +115,38 @@
 <body>
 
     <div class="welcome-section">
-        <h1 id="welcome-text">Hoş Geldin!</h1>
+        <div class="user-card">
+            <h1 id="welcome-text">Hoş Geldin!</h1>
 
-        <div id="name-setup">
-            <p>Kullanıcı adını belirle:</p>
-            <input type="text" id="username-input" placeholder="Adın nedir?">
-            <button class="btn-save" onclick="saveName()">Kaydet</button>
+            <div id="name-setup">
+                <p>Sana nasıl hitap etmemizi istersin?</p>
+                <input type="text" id="username-input" placeholder="İsmini Buraya Yaz">
+                <br>
+                <button class="btn-save" onclick="saveName()">ADIMI KAYDET</button>
+            </div>
         </div>
     </div>
 
     <div class="order-section">
-        <h2>Geleceğin Teknolojisine Sahip Ol</h2>
-        <p>HAT30 Drone Çipi çok yakında ön siparişe açılacaktır.</p>
-        <button class="order-btn" onclick="orderAlert()">SİPARİŞ VER</button>
+        <div class="order-container">
+            <h2>🚀 HAT30 Teknolojisine Sahip Ol</h2>
+            <p>Sınırları zorlayan drone çipi için geri sayım başladı.</p>
+
+            <button class="order-btn" onclick="goToOrderPage()">SİPARİŞ VER</button>
+
+            <p class="status-text">Ön sipariş avantajlarını kaçırmamak için butona tıkla.</p>
+        </div>
     </div>
 
     <script>
-        // Kullanıcı adını tarayıcı hafızasına (localStorage) kaydedelim
+        // İSMİ KAYDETME VE GÖRÜNTÜLEME
         function saveName() {
             const name = document.getElementById('username-input').value;
-            if (name) {
-                localStorage.setItem('hat30_user', name);
+            if (name.trim() !== "") {
+                localStorage.setItem('hat30_user_name', name);
                 updateUI(name);
+            } else {
+                alert("Lütfen bir isim gir Adil!"); // Burası sadece boş bırakırsan çıkar
             }
         }
 
@@ -93,13 +155,18 @@
             document.getElementById('name-setup').style.display = "none";
         }
 
-        function orderAlert() {
-            alert("Ürünlerimiz çok yakında hizmete sunulacaktır!");
+        // MESAJ KUTUSU OLMADAN SAYFAYA YÖNLENDİRME
+        function goToOrderPage() {
+            window.location.href = "order.html";
         }
 
-        // Sayfa açıldığında isim var mı kontrol et
-        const savedName = localStorage.getItem('hat30_user');
-        if (savedName) updateUI(savedName);
+        // SAYFA YÜKLENDİĞİNDE KONTROL ET
+        window.onload = function () {
+            const savedName = localStorage.getItem('hat30_user_name');
+            if (savedName) {
+                updateUI(savedName);
+            }
+        };
     </script>
 </body>
 
