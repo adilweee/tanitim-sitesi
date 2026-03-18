@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sipariş Durumu | HAT30</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle, #1a1a2e, #0f0c29);
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            text-align: center;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid #f5576c;
+            box-shadow: 0 0 30px rgba(245, 87, 108, 0.2);
+            max-width: 500px;
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #f5576c;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid #00d2ff;
+            color: #00d2ff;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #00d2ff;
+            color: #0f0c29;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="info-card">
+        <div class="icon">🚀</div>
+        <h1>HAT30 Ön Sipariş</h1>
+        <p>Ürünlerimiz şu anda üretim aşamasındadır ve çok yakında hizmete sunulacaktır.</p>
+        <p>Gelişmelerden haberdar olmak için takipte kalın!</p>
+
+        <button class="back-btn" onclick="window.location.href='dashboard.html'">Panele Dön</button>
+    </div>
+
+</body>
+
+</html>
