@@ -1,8 +1,9 @@
 <script type="module">
+  // Firebase kütüphanelerini internetten çekiyoruz
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-  // Senin Firebase bilgilerini buraya yerleştirdim
+  // Senin Firebase Proje Bilgilerin
   const firebaseConfig = {
     apiKey: "AIzaSyCwOgPy54D0tyUzMrSkANGC5h4veQUkETM",
     authDomain: "tanitim-sitesi.firebaseapp.com",
@@ -13,35 +14,41 @@
     measurementId: "G-8BFXS8HZ03"
   };
 
-  // Firebase'i başlat
+  // Firebase'i çalıştır
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // Butonlara ve kutucuklara erişelim
+  // Sayfadaki kutucukları ve butonu JavaScript'e tanıtıyoruz
+  // Not: HTML'de inputların tipinin 'email' ve 'password' olduğundan emin ol!
   const emailInput = document.querySelector('input[type="email"]');
   const passwordInput = document.querySelector('input[type="password"]');
-  const loginBtn = document.querySelector('.btn'); // Giriş Yap butonu
+  const loginBtn = document.getElementById('login-btn');
 
-  // KAYIT OL FONKSİYONU
-  // (Senin HTML'inde şimdilik sadece "Kayıt Ol" linki vardı, 
-  // gel onu şimdilik Giriş butonuna bağlayalım veya yeni bir buton ekleyelim)
+  // Butona basıldığında ne olacağını söylüyoruz
+  if (loginBtn) {
+    loginBtn.addEventListener('click', (e) => {
+      e.preventDefault(); // Sayfanın kendi kendine yenilenmesini durdurur
 
-  loginBtn.addEventListener('click', () => {
-    const email = emailInput.value;
-    const password = passwordInput.value;
+      const email = emailInput.value;
+      const password = passwordInput.value;
 
-    if (email === "" || password === "") {
-      alert("Lütfen tüm alanları doldur!");
-      return;
-    }
+      if (email === "" || password.length < 6) {
+        alert("Lütfen geçerli bir e-posta girin ve şifreniz en az 6 karakter olsun!");
+        return;
+      }
 
-    // Kullanıcıyı Firebase'e kaydet
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        alert("Başarıyla kayıt oldun! Hoş geldin.");
-      })
-      .catch((error) => {
-        alert("Hata oluştu: " + error.message);
-      });
-  });
+      // Firebase'e kullanıcıyı gönderiyoruz
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Tebrikler Adil! Başarıyla kayıt oldun.");
+          console.log("Kayıt başarılı:", userCredential.user);
+        })
+        .catch((error) => {
+          alert("Hata oluştu: " + error.message);
+          console.error("Firebase Hatası:", error.code);
+        });
+    });
+  } else {
+    console.error("HATA: 'login-btn' ID'li buton sayfada bulunamadı!");
+  }
 </script>
