@@ -1,54 +1,87 @@
-<script type="module">
-  // Firebase kütüphanelerini internetten çekiyoruz
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+<!DOCTYPE html>
+<html lang="tr">
 
-  // Senin Firebase Proje Bilgilerin
-  const firebaseConfig = {
-    apiKey: "AIzaSyCwOgPy54D0tyUzMrSkANGC5h4veQUkETM",
-    authDomain: "tanitim-sitesi.firebaseapp.com",
-    projectId: "tanitim-sitesi",
-    storageBucket: "tanitim-sitesi.firebasestorage.app",
-    messagingSenderId: "615084312824",
-    appId: "1:615084312824:web:f07b192dc33dcee02d530d",
-    measurementId: "G-8BFXS8HZ03"
-  };
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tanıtım Sitesi | Adil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  // Firebase'i çalıştır
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+<body>
 
-  // Sayfadaki kutucukları ve butonu JavaScript'e tanıtıyoruz
-  // Not: HTML'de inputların tipinin 'email' ve 'password' olduğundan emin ol!
-  const emailInput = document.querySelector('input[type="email"]');
-  const passwordInput = document.querySelector('input[type="password"]');
-  const loginBtn = document.getElementById('login-btn');
+  <div class="login-container">
+    <h1>Hoş Geldin</h1>
 
-  // Butona basıldığında ne olacağını söylüyoruz
-  if (loginBtn) {
-    loginBtn.addEventListener('click', (e) => {
-      e.preventDefault(); // Sayfanın kendi kendine yenilenmesini durdurur
+    <div class="input-group">
+      <input type="email" id="user-email" placeholder="E-posta Adresini Yaz" required>
+    </div>
 
-      const email = emailInput.value;
-      const password = passwordInput.value;
+    <div class="input-group">
+      <input type="password" id="user-password" placeholder="Şifreni Belirle (Min. 6 Karakter)" required>
+    </div>
 
-      if (email === "" || password.length < 6) {
-        alert("Lütfen geçerli bir e-posta girin ve şifreniz en az 6 karakter olsun!");
-        return;
-      }
+    <button type="button" id="login-btn" class="btn">Kayıt Ol / Giriş Yap</button>
 
-      // Firebase'e kullanıcıyı gönderiyoruz
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          alert("Tebrikler Adil! Başarıyla kayıt oldun.");
-          console.log("Kayıt başarılı:", userCredential.user);
-        })
-        .catch((error) => {
-          alert("Hata oluştu: " + error.message);
-          console.error("Firebase Hatası:", error.code);
-        });
-    });
-  } else {
-    console.error("HATA: 'login-btn' ID'li buton sayfada bulunamadı!");
-  }
-</script>
+    <p id="status-message" style="margin-top: 15px; color: yellow;"></p>
+  </div>
+
+  <script type="module">
+    // Firebase Modüllerini Yüklüyoruz
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // Senin Firebase Bilgilerin
+    const firebaseConfig = {
+      apiKey: "AIzaSyCwOgPy54D0tyUzMrSkANGC5h4veQUkETM",
+      authDomain: "tanitim-sitesi.firebaseapp.com",
+      projectId: "tanitim-sitesi",
+      storageBucket: "tanitim-sitesi.firebasestorage.app",
+      messagingSenderId: "615084312824",
+      appId: "1:615084312824:web:f07b192dc33dcee02d530d",
+      measurementId: "G-8BFXS8HZ03"
+    };
+
+    // Firebase'i Başlat
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // HTML Elementlerine Erişim
+    const emailInput = document.getElementById('user-email');
+    const passwordInput = document.getElementById('user-password');
+    const loginBtn = document.getElementById('login-btn');
+    const statusMsg = document.getElementById('status-message');
+
+    // Butona Tıklama Olayı
+    if (loginBtn) {
+      loginBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const email = emailInput.value;
+        const password = passwordInput.value;
+
+        if (email === "" || password.length < 6) {
+          alert("Lütfen geçerli bir mail yaz ve şifren en az 6 karakter olsun!");
+          return;
+        }
+
+        statusMsg.innerText = "İşlem yapılıyor, lütfen bekle...";
+
+        // Firebase Kayıt Fonksiyonu
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            statusMsg.style.color = "lime";
+            statusMsg.innerText = "Başarıyla kayıt oldun! Firebase'i kontrol et.";
+            alert("Tebrikler Adil! Kayıt başarılı.");
+          })
+          .catch((error) => {
+            statusMsg.style.color = "red";
+            statusMsg.innerText = "Hata: " + error.message;
+            console.error("Hata Detayı:", error.code);
+          });
+      });
+    }
+  </script>
+</body>
+
+</html>
