@@ -4,60 +4,192 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adil | Tanıtım Sitesi</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Adil | Proje Portfolyosu</title>
+
   <style>
-    /* Hızlıca butonları sol üste sabitlemek için ek stil */
-    .auth-buttons {
-      position: absolute;
+    /* ŞEKİL ŞUKUL CSS BURADA */
+    :root {
+      --primary: #00d2ff;
+      --secondary: #3a7bd5;
+      --bg: #0f0c29;
+      --glass: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: white;
+      margin: 0;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* SOL ÜST BUTONLAR */
+    .nav-auth {
+      position: fixed;
       top: 20px;
       left: 20px;
-      display: flex;
-      gap: 10px;
       z-index: 1000;
+      display: flex;
+      gap: 15px;
     }
 
     .auth-btn {
-      padding: 8px 15px;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
       cursor: pointer;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      background: #f4f4f4;
-      font-weight: bold;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
 
-    section {
-      padding: 100px 20px;
+    .auth-btn:hover {
+      background: var(--primary);
+      box-shadow: 0 0 20px var(--primary);
+      transform: translateY(-3px);
+    }
+
+    /* ANA İÇERİK KUTULARI */
+    .container {
+      max-width: 900px;
+      margin: 100px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 25px;
+      margin-bottom: 50px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
       text-align: center;
-      min-height: 50vh;
     }
 
-    #contact {
-      background-color: #f9f9f9;
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* MODAL (AÇILIR PENCERE) */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: #1a1a2e;
+      width: 350px;
+      margin: 10% auto;
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid var(--primary);
+      text-align: center;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 25px;
+      cursor: pointer;
+      color: white;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #0f0c29;
+      color: white;
+      box-sizing: border-box;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* İLETİŞİM LİSTESİ */
+    .contact-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .contact-list li {
+      margin: 15px 0;
+      font-size: 1.2rem;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="auth-buttons">
-    <button id="login-btn" class="auth-btn">Log In</button>
-    <button id="signup-btn" class="auth-btn" style="background: #28a745; color: white;">Sign Up</button>
+  <div class="nav-auth">
+    <button class="auth-btn" onclick="toggleModal('login')">LOG IN</button>
+    <button class="auth-btn" onclick="toggleModal('signup')" style="background: var(--primary);">SIGN UP</button>
   </div>
 
-  <section id="mission">
-    <h1>Misyonumuz</h1>
-    <p>Geleceğin teknolojilerini (Arduino, Elektronik ve Web) kullanarak <br>
-      yaratıcı çözümler üretmek ve sürekli öğrenmeye devam etmek.</p>
-  </section>
+  <div class="container">
+    <section class="card" id="mission">
+      <h1>🚀 Misyonumuz</h1>
+      <p>Elektronik dünyasını kodlarla birleştiriyoruz. Arduino projelerinden web geliştirmeye kadar her alanda
+        sınırları zorlamayı ve sürekli gelişmeyi hedefliyoruz.</p>
+    </section>
 
-  <hr>
-  <section id="contact">
-    <h2>İletişim</h2>
-    <p><strong>E-posta:</strong> adil@example.com</p>
-    <p><strong>GitHub:</strong> github.com/adilweee</p>
-    <p>Türkiye / İstanbul</p>
-  </section>
+    <section class="card" id="contact">
+      <h2>📱 İletişim Bilgileri</h2>
+      <ul class="contact-list">
+        <li><strong>E-posta:</strong> adil@example.com</li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/adilweee" style="color:white;">@adilweee</a></li>
+        <li>📍 İstanbul, Türkiye</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle">Kayıt Ol</h2>
+      <input type="email" id="email" placeholder="E-posta Adresin">
+      <input type="password" id="password" placeholder="Şifren (En az 6 hane)">
+      <button class="submit-btn" id="mainActionBtn">Devam Et</button>
+      <p id="msg" style="font-size: 12px; margin-top: 10px;"></p>
+    </div>
+  </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -76,26 +208,47 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Butonlara tıklayınca ne olacak?
-    document.getElementById('signup-btn').addEventListener('click', () => {
-      const email = prompt("Kayıt için E-posta girin:");
-      const pass = prompt("Şifre belirleyin (min 6 karakter):");
-      if (email && pass) {
-        createUserWithEmailAndPassword(auth, email, pass)
-          .then(() => alert("Başarıyla Sign Up yapıldı!"))
-          .catch((e) => alert("Hata: " + e.message));
-      }
-    });
+    const modal = document.getElementById('authModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const actionBtn = document.getElementById('mainActionBtn');
+    const msg = document.getElementById('msg');
 
-    document.getElementById('login-btn').addEventListener('click', () => {
-      const email = prompt("Giriş için E-posta:");
-      const pass = prompt("Şifre:");
-      if (email && pass) {
-        signInWithEmailAndPassword(auth, email, pass)
-          .then(() => alert("Hoş geldin! Giriş başarılı."))
-          .catch((e) => alert("Giriş başarısız: " + e.message));
+    // Modal'ı Açma Fonksiyonu (Global yaptık)
+    window.toggleModal = function (mode) {
+      modal.style.display = "block";
+      msg.innerText = "";
+      if (mode === 'login') {
+        modalTitle.innerText = "Giriş Yap";
+        actionBtn.innerText = "Giriş Yap";
+        actionBtn.onclick = () => handleAuth('login');
+      } else {
+        modalTitle.innerText = "Yeni Kayıt";
+        actionBtn.innerText = "Kayıt Ol";
+        actionBtn.onclick = () => handleAuth('signup');
       }
-    });
+    }
+
+    window.closeModal = function () { modal.style.display = "none"; }
+
+    // Firebase İşlemleri
+    async function handleAuth(mode) {
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+
+      try {
+        if (mode === 'signup') {
+          await createUserWithEmailAndPassword(auth, email, pass);
+          alert("Kayıt Başarılı Adil! Firebase'i kontrol et.");
+        } else {
+          await signInWithEmailAndPassword(auth, email, pass);
+          alert("Giriş Başarılı! Tekrar hoş geldin.");
+        }
+        closeModal();
+      } catch (error) {
+        msg.style.color = "red";
+        msg.innerText = "Hata: " + error.message;
+      }
+    }
   </script>
 </body>
 
